@@ -1,0 +1,12 @@
+version: '3'
+services:
+    postgres_service:
+        image: postgres
+        container_name: postgres_container
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: test_password
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+volumes: 
+    postgres_data:

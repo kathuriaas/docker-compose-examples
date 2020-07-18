@@ -1,0 +1,8 @@
+version: '3'
+services:
+    ubuntu_service:
+        image: ubuntu_custom_image
+        build:
+            context: .
+        container_name: ubuntu_container
+        tty: true
