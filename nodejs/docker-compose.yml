@@ -1,0 +1,10 @@
+version: '3'
+services:
+    ubuntu_service:
+        image: node_custom_image
+        build: 
+            context: .
+        container_name: node_container
+        tty: true
+        ports: 
+            - 3001:8000
