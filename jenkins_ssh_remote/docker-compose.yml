@@ -1,0 +1,28 @@
+# Here one volume is used as path, so location should be writable by jenkins
+version: '3'
+services:
+    jenkins_service:
+        image: jenkins/jenkins
+        container_name: jenkins_container
+        restart: always
+        volumes:
+            - jenkins_home:/var/jenkins_home
+            - $HOME/jenkins_files:/tmp/jenkins_files
+        ports: 
+            - 8080:8080
+            - 50000:50000
+        networks: 
+            - network1
+    ssh_server:
+        image: ubuntu_ssh_server
+        container_name: ubuntu_container
+        build:
+            context: ./ssh_server
+        restart: always
+        tty: true
+        networks: 
+            - network1
+networks: 
+    network1:
+volumes: 
+    jenkins_home:
