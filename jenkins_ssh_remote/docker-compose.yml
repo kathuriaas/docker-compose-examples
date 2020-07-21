@@ -1,4 +1,7 @@
 # Here one volume is used as path, so location should be writable by jenkins
+# Variable is this file (e.g. ssh_user_password and ROOT_PASSWORD) are substituted from shell's env variables OR .env file. and are just scoped at shell of host.
+# For environment variables to be used in build/container, use ARGS/ENV.
+# See <https://docs.docker.com/compose/compose-file/#variable-substitution> for details.
 version: '3'
 services:
     jenkins_service:
@@ -18,6 +21,9 @@ services:
         container_name: ubuntu_container
         build:
             context: ./ssh_server
+            args: 
+                - ssh_user_password=${ssh_user_password}
+                - ROOT_PASSWORD=${ROOT_PASSWORD}
         restart: always
         tty: true
         networks: 

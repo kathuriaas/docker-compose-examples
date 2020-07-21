@@ -1,14 +1,19 @@
-#Taken for docker <https://docs.docker.com/engine/examples/running_ssh_service/>
+#Code for dockerfile taken from <https://docs.docker.com/engine/examples/running_ssh_service/>
+#This file has passwords specified for learning purpose. Please change these while using before proceeding.
 FROM ubuntu
 
-WORKDIR /usr/src/app
+ARG ssh_user_password
+
+ARG ROOT_PASSWORD
+
+RUN echo $ssh_user_password
 
 RUN useradd ssh_user && \
-    echo "ssh_user:ssh_user" | chpasswd
+    echo "ssh_user:${ssh_user_password}" | chpasswd
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
-RUN echo 'root:THEPASSWORDYOUCREATED' | chpasswd
+RUN echo 'root:${ROOT_PASSWORD}' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
